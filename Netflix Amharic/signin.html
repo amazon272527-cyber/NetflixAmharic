@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Amharic - Sign In</title> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* ለዚህ ገጽ ብቻ: የጀርባ ምስል እና ሙሉ ስክሪን ማዕከላዊነት */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* እባክዎ 'hero_image.jpg' ፋይልዎ ካለ ያረጋግጡ */
+            background-image: url('hero_image.jpg'); 
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* ጥቁር ግራዲየንት ዳራውን ለመደብዘዝ */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7); 
+            z-index: 1;
+        }
+
+        /* የፎርሙን ከሌሎች ነገሮች በላይ እንዲሆን (.signup-container የሚለው ስም ለጊዜው ተጠብቋል) */
+        .signup-container {
+            z-index: 2;
+            /* ለመግቢያ የተሻለ ስም: .signin-container ሊሆን ይችላል */
+        }
+        
+        /* --- 1. Google Sign In Button Style --- */
+        .google-signin-btn { /* ስሙ ከ signup-btn ወደ signin-btn ተቀይሯል */
+            background-color: #4285F4; /* Google ሰማያዊ */
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+        
+        .google-signin-btn:hover { background-color: #3367D6; }
+
+        .google-icon {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+        }
+
+        /* --- 2. Separator (ወይም) Style --- */
+        .social-login-separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #a0a0a0;
+            margin: 20px 0;
+        }
+
+        .social-login-separator::before,
+        .social-login-separator::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: #333;
+            margin: 0 10px;
+        }
+        .separator-text {
+            background: #111; /* ከዳራው ቀለም ጋር ተመሳሳይ ይሁን */
+            padding: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="signup-container">
+        <h1 class="signup-title">ይግቡ (Sign In)</h1>
+        
+        <button type="button" class="google-signin-btn" onclick="handleGoogleSignin()">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="google-icon">
+                <path fill="#4285F4" d="M24 5c6.63 0 10.99 2.87 13.06 4.94l-3.35 3.25c-1.3-.9-4.04-2.19-9.71-2.19c-7.98 0-14.83 5.37-17.18 12.59l-3.23-2.52C2.11 15.34 11.2 5 24 5z"></path>
+                <path fill="#34A853" d="M41 24c0-1.28-.11-2.48-.3-3.64H24v7.28h10.63c-.5 2.76-2.1 5.38-4.52 7.03l4.5 3.5c3.08-2.88 5.09-7.25 5.09-12.17z"></path>
+                <path fill="#FBBC05" d="M24 43c-6.81 0-12.63-2.73-16.8-7.39l4.82-3.75c2.51 3.2 6.57 5.4 11.98 5.4c4.65 0 8.58-1.57 11.45-4.25l4.5 3.5c-3.72 3.48-8.81 5.89-16.14 5.89z"></path>
+                <path fill="#EA4335" d="M7.2 24c0-2.44.62-4.75 1.7-6.75l-4.82-3.75C2.11 18.66 0 21.28 0 24s2.11 5.34 4.08 8.5l4.82-3.75c-1.08-2-1.7-4.31-1.7-6.75z"></path>
+            </svg>
+            በ Google ይግቡ (Sign In with Google)
+        </button>
+        
+        <div class="social-login-separator">
+            <span class="separator-text">ወይም በእጅዎ ያስገቡ</span>
+        </div>
+        
+        <form class="signin-form">
+            
+            <div class="input-group">
+                <input type="email" id="signin-email" placeholder="ኢሜይል አድራሻ" required>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="signin-password" placeholder="የይለፍ ቃል" required>
+            </div>
+            
+            <div class="remember-me">
+                <a href="#" class="form-link">የይለፍ  ቃል ረሱ?</a>
+            </div>
+            
+            <button type="submit" class="signup-btn">ይግቡ (Sign In)</button>
+        </form>
+        
+        <div class="login-prompt">
+            የተጠቃሚ አካውንት የለዎትም? <a href="signup.html" class="form-link">ይመዝገቡ (Sign Up)</a>
+        </div>
+    </div>
+    
+    <div class="cookie-bar" id="cookie-consent-bar" style="display:none;">
+        <p>ይህ ድረ-ገጽ የአገልግሎት ጥራት ለማሻሻል ኩኪዎችን ይጠቀማል።</p>
+        <button class="cookie-dismiss-btn" id="accept-cookies">እቀበላለሁ</button>
+    </div>
+
+    <script>
+        // 🟢 Google Sign In (በማሳያ ሞድ)
+        function handleGoogleSignin() {
+            // በእውነተኛ ፕሮጀክት ይህ ተግባር የGoogleን ማረጋገጫ (Authentication) ኮድ ይጠቀማል
+            alert("በማሳያ ሞድ (Demo Mode) ላይ ነን። እውነተኛ የ Google Sign In ለመስራት ተጨማሪ የኮድ እና የGoogle Client ID ያስፈልጋል።");
+            
+            // ለሙከራ: ተጠቃሚው Google Sign Up ካደረገ በኋላ እንዲሞክር ማበረታታት
+            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+            const googleUsers = registeredUsers.filter(user => user.password === 'google_account_authenticated');
+            
+            if (googleUsers.length > 0) {
+                 alert(`በመደበኛ መግቢያ (Email/Password) ከዚህ ቀደም የተመዘገቡ ${googleUsers.length} የ Google አካውንቶችን በመጠቀም መግባት ይችላሉ።`);
+            }
+        }
+
+        // --- መደበኛ የመግቢያ ሎጂክ (Manual Sign In) ---
+
+        const signinForm = document.querySelector('.signin-form');
+        const emailInput = document.getElementById('signin-email');
+        const passwordInput = document.getElementById('signin-password');
+
+        if (signinForm) {
+            signinForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                let registeredUsers = [];
+
+                // 1. የተመዘገቡ ተጠቃሚዎችን ከLocal Storage ማምጣት
+                try {
+                    registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                } catch (e) {
+                    console.error("Error reading registeredUsers from LocalStorage:", e);
+                }
+
+                // 2. የተጠቃሚውን መረጃ ማረጋገጥ
+                const user = registeredUsers.find(
+                    u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+                );
+
+                if (user) {
+                    // 3. በተሳካ ሁኔታ ሲገባ ወደ 'home.html' መምራት
+                    alert(`✅ እንኳን ደህና መጣህ/ሽ ${user.username}። በተሳካ ሁኔታ ገብተዋል።`);
+                    // 🔴 አስፈላጊ: እባክዎ ይህንን ወደ እውነተኛ የመነሻ ገጽዎ (ለምሳሌ home.html) ይለውጡ
+                    window.location.href = 'home.html'; 
+                } else {
+                    // 4. የተሳሳተ መረጃ
+                    alert('❌ የመግቢያ መረጃ የተሳሳተ ነው። ኢሜይልዎን ወይም የይለፍ ቃልዎን ያረጋግጡ።');
+                }
+            });
+        }
+        
+        // የኩኪ ማስጠንቀቂያ ተግባር
+        document.addEventListener('DOMContentLoaded', () => {
+            const cookieBar = document.getElementById('cookie-consent-bar');
+            const acceptButton = document.getElementById('accept-cookies');
+            const cookieAccepted = localStorage.getItem('cookieConsent');
+
+            if (!cookieAccepted && cookieBar) {
+                cookieBar.style.display = 'flex';
+            } else if (cookieBar) {
+                cookieBar.style.display = 'none';
+            }
+
+            if (acceptButton) {
+                acceptButton.addEventListener('click', () => {
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    if (cookieBar) {
+                        cookieBar.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

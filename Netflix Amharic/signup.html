@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Amharic - Sign Up</title> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* ለዚህ ገጽ ብቻ: የጀርባ ምስል እና ሙሉ ስክሪን ማዕከላዊነት */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* እባክዎ 'hero_image.jpg' ፋይልዎ ካለ ያረጋግጡ */
+            background-image: url('hero_image.jpg'); 
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* ጥቁር ግራዲየንት ዳራውን ለመደብዘዝ */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7); 
+            z-index: 1;
+        }
+
+        /* የፎርሙን ከሌሎች ነገሮች በላይ እንዲሆን */
+        .signup-container {
+            z-index: 2;
+        }
+        
+        /* --- Google Sign Up Button Style --- */
+        .google-signup-btn {
+            background-color: #4285F4; /* Google ሰማያዊ */
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+        
+        .google-signup-btn:hover { background-color: #3367D6; }
+
+        .google-icon {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+        }
+
+        /* --- Separator (ወይም) Style --- */
+        .social-login-separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #a0a0a0;
+            margin: 20px 0;
+        }
+
+        .social-login-separator::before,
+        .social-login-separator::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: #333;
+            margin: 0 10px;
+        }
+        .separator-text {
+            background: #111; /* ከዳራው ቀለም ጋር ተመሳሳይ ይሁን */
+            padding: 0 10px;
+        }
+        
+        /* ለኩኪ ማስጠንቀቂያ የተጨመረ ስታይል */
+        .cookie-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #222;
+            color: white;
+            padding: 15px;
+            display: none; /* በመጀመሪያ መደበቅ */
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+        .cookie-dismiss-btn {
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="signup-container">
+        <h1 class="signup-title">አዲስ ይመዝገቡ</h1>
+        
+        <button type="button" class="google-signup-btn" onclick="handleGoogleSignup()">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="google-icon">
+                <path fill="#4285F4" d="M24 5c6.63 0 10.99 2.87 13.06 4.94l-3.35 3.25c-1.3-.9-4.04-2.19-9.71-2.19c-7.98 0-14.83 5.37-17.18 12.59l-3.23-2.52C2.11 15.34 11.2 5 24 5z"></path>
+                <path fill="#34A853" d="M41 24c0-1.28-.11-2.48-.3-3.64H24v7.28h10.63c-.5 2.76-2.1 5.38-4.52 7.03l4.5 3.5c3.08-2.88 5.09-7.25 5.09-12.17z"></path>
+                <path fill="#FBBC05" d="M24 43c-6.81 0-12.63-2.73-16.8-7.39l4.82-3.75c2.51 3.2 6.57 5.4 11.98 5.4c4.65 0 8.58-1.57 11.45-4.25l4.5 3.5c-3.72 3.48-8.81 5.89-16.14 5.89z"></path>
+                <path fill="#EA4335" d="M7.2 24c0-2.44.62-4.75 1.7-6.75l-4.82-3.75C2.11 18.66 0 21.28 0 24s2.11 5.34 4.08 8.5l4.82-3.75c-1.08-2-1.7-4.31-1.7-6.75z"></path>
+            </svg>
+            በ Google ይመዝገቡ (Sign Up with Google)
+        </button>
+        
+        <div class="social-login-separator">
+            <span class="separator-text">ወይም በእጅዎ ያስገቡ</span>
+        </div>
+        
+        <form class="signup-form">
+            
+            <div class="input-group">
+                <input type="text" id="signup-username" placeholder="ሙሉ ስም ያስገቡ" required>
+            </div>
+            
+            <div class="input-group">
+                <input type="email" id="signup-email" placeholder="ኢሜይል አድራሻ" required>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="signup-password" placeholder="የይለፍ ቃል" required>
+            </div>
+            
+            <div class="input-group">
+                <select id="gender" required>
+                    <option value="" disabled selected>ፆታ ይምረጡ</option>
+                    <option value="male">ወንድ</option>
+                    <option value="female">ሴት</option>
+                </select>
+            </div>
+
+            <div class="terms-checkbox">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">የአገልግሎት <a href="#" class="form-link">ደንቦችን</a> ተስማምቻለሁ።</label>
+            </div>
+            
+            <button type="submit" class="signup-btn">ይመዝገቡ (Sign Up)</button>
+        </form>
+        
+        <div class="login-prompt">
+            የተጠቃሚ አካውንት አለዎት? <a href="signin.html" class="form-link">ይግቡ (Sign In)</a>
+        </div>
+    </div>
+
+    <div class="cookie-bar" id="cookie-consent-bar" style="display:none;">
+        <p>ይህ ድረ-ገጽ የአገልግሎት ጥራት ለማሻሻል ኩኪዎችን ይጠቀማል።</p>
+        <button class="cookie-dismiss-btn" id="accept-cookies">እቀበላለሁ</button>
+    </div>
+
+    <script>
+        // 🟢 የ Google Signup አማራጭን የሚያሳይ እና የሚመዘግብ ተግባር
+        function handleGoogleSignup() {
+            // የማሳያ Google አካውንቶች ዝርዝር
+            const googleAccounts = [
+                'alemu.kebede@gmail.com',
+                'seble.tadesse@gmail.com',
+                'demo_user@gmail.com'
+            ];
+
+            let message = "በ Google ይመዝገቡ (Sign Up with Google) \n\nእባክዎ አንዱን አካውንት ይምረጡ (ቁጥር ያስገቡ):\n";
+            
+            // አካውንቶቹን በቁጥር መዘርዘር
+            googleAccounts.forEach((account, index) => {
+                message += `${index + 1}. ${account}\n`;
+            });
+            message += "\nለመሰረዝ 'C' የሚለውን ይጫኑ።";
+
+            // ተጠቃሚው አካውንት እንዲመርጥ መጠየቅ
+            const selection = prompt(message);
+
+            if (selection === null || selection.toUpperCase() === 'C') {
+                alert("የGoogle ምዝገባው ተሰርዟል።");
+                return;
+            }
+
+            const selectedIndex = parseInt(selection) - 1;
+
+            if (selectedIndex >= 0 && selectedIndex < googleAccounts.length) {
+                const selectedEmail = googleAccounts[selectedIndex];
+                
+                // 1. ነባር ተጠቃሚዎችን ከLocal Storage ማምጣት
+                let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+                // 2. ኢሜይሉ አስቀድሞ መመዝገሩን ማረጋገጥ (Case-insensitive)
+                const userExists = registeredUsers.some(user => user.email.toLowerCase() === selectedEmail.toLowerCase());
+
+                if (userExists) {
+                    alert(`❌ አካውንትዎ (${selectedEmail}) አስቀድሞ ተመዝግቧል። እባክዎ በቀጥታ ይግቡ (Sign In)።`);
+                    return;
+                }
+
+                // 3. አዲስ ተጠቃሚ መፍጠር
+                const newGoogleUser = {
+                    username: selectedEmail.split('@')[0], // ኢሜይሉን ወደ ተጠቃሚ ስም መቀየር
+                    email: selectedEmail,
+                    password: "google_account_authenticated", 
+                    gender: "N/A" // ከGoogle ስለመጣ ጾታውን N/A እናደርጋለን
+                };
+                registeredUsers.push(newGoogleUser);
+                
+                // 4. ዝርዝሩን ማስቀመጥ እና ወደ መግቢያ ገጽ መምራት
+                localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+                alert(`🎉 በ Google አካውንትዎ (${newGoogleUser.username}) በተሳካ ሁኔታ ተመዝግበዋል። አሁን መግባት ይችላሉ።`);
+                window.location.href = 'signin.html';
+
+            } else {
+                alert("❌ የተሳሳተ ምርጫ። እባክዎ ከ1 እስከ 3 ያለ ቁጥር ይምረጡ።");
+            }
+        }
+
+
+        // --- መደበኛ የኢሜይል ምዝገባ (Manual Email Signup) ---
+
+        const signupForm = document.querySelector('.signup-form');
+        const usernameInput = document.getElementById('signup-username');
+        const emailInput = document.getElementById('signup-email');
+        const passwordInput = document.getElementById('signup-password');
+        const genderInput = document.getElementById('gender');
+
+        if (signupForm) {
+            signupForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const username = usernameInput.value.trim();
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                const gender = genderInput.value;
+
+                // 1. ነባር ተጠቃሚዎችን በደህንነት ከLocal Storage ማምጣት
+                let registeredUsers;
+                try {
+                    registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                } catch (e) {
+                    console.error("Error reading registeredUsers from LocalStorage:", e);
+                    registeredUsers = [];
+                }
+
+                // 2. ኢሜይሉ አስቀድሞ መመዝገሩን ማረጋገጥ (Case-insensitive)
+                const userExists = registeredUsers.some(user => user.email.toLowerCase() === email.toLowerCase());
+
+                if (userExists) {
+                    alert('❌ ይህ ኢሜይል አስቀድሞ ተመዝግቧል። እባክዎ ይግቡ (Sign In)።');
+                    return;
+                }
+
+                // 3. አዲሱን ተጠቃሚ ወደ ዝርዝሩ መጨመር
+                const newUser = { 
+                    username: username, 
+                    email: email, 
+                    password: password, 
+                    gender: gender 
+                };
+                registeredUsers.push(newUser);
+                
+                // 4. አዲሱን ዝርዝር በLocal Storage ላይ ማስቀመጥ
+                localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+                // ወደ መግቢያ ገጽ (signin.html) መምራት
+                alert(`🎉 ${username}፣ በተሳካ ሁኔታ ተመዝግበዋል። አሁን መግባት ይችላሉ።`);
+                window.location.href = 'signin.html';
+            });
+        }
+
+        
+        // የኩኪ ማስጠንቀቂያ ተግባር
+        document.addEventListener('DOMContentLoaded', () => {
+            const cookieBar = document.getElementById('cookie-consent-bar');
+            const acceptButton = document.getElementById('accept-cookies');
+            const cookieAccepted = localStorage.getItem('cookieConsent');
+
+            if (!cookieAccepted && cookieBar) {
+                cookieBar.style.display = 'flex';
+            } else if (cookieBar) {
+                cookieBar.style.display = 'none';
+            }
+
+            if (acceptButton) {
+                acceptButton.addEventListener('click', () => {
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    if (cookieBar) {
+                        cookieBar.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

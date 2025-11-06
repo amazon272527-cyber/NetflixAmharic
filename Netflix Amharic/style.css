@@ -1,0 +1,425 @@
+/* --- 1. ግሎባል እና መሠረታዊ ቅንጅቶች (Global & Base) --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #181818; /* ትንሽ ብሩህ ጥቁር (እንደ YouTube Dark) */
+    color: #fff; 
+    display: flex; 
+    min-height: 100vh;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* --- 2. የጎን አሞሌ (Sidebar - YouTube-like Mini/Full) --- */
+.sidebar {
+    width: 72px; /* እንደ YouTube Mini Sidebar */
+    background-color: #0f0f0f; 
+    padding: 15px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow-x: hidden; 
+    transition: width 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar.is-open {
+    width: 240px; /* ሲከፈት ሰፋ ያለ */
+}
+
+.logo-mini {
+    color: #E50914; 
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+.sidebar-toggle {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 24px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    color: #aaa;
+    transition: background-color 0.3s, color 0.3s;
+    white-space: nowrap; 
+}
+
+.sidebar.is-open .nav-item {
+    flex-direction: row; /* ሲከፈት ጎን ለጎን */
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.nav-item:hover, .nav-item.active {
+    background-color: #272727;
+    color: #fff;
+}
+
+.nav-item .material-icons {
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+
+.sidebar.is-open .nav-item .material-icons {
+    margin-right: 20px;
+    margin-bottom: 0;
+}
+
+.sidebar-text {
+    font-size: 0.8em;
+    opacity: 1; /* በ mini-sidebar ላይ ጽሁፍ እንዲታይ */
+}
+
+.sidebar.is-open .sidebar-text {
+    opacity: 1;
+    font-size: 1em;
+}
+
+.nav-item.bottom {
+    margin-top: auto; 
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+
+/* --- 3. ዋና ይዘት (Main Content) --- */
+.main-content {
+    margin-left: 72px; /* ከSidebar ጋር እኩል */
+    padding: 20px;
+    width: 100%;
+    transition: margin-left 0.3s ease;
+}
+
+.main-content.is-open {
+    margin-left: 240px; /* Sidebar ሲከፈት */
+}
+
+/* --- 4. የላይኛው ራስጌ (Top Header - YouTube-like) --- */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background-color: #181818;
+    z-index: 900;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #0f0f0f;
+    border-radius: 20px;
+    padding: 5px 10px;
+    border: 1px solid #333;
+    width: 50%;
+    max-width: 600px;
+}
+
+.search-bar input {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    outline: none;
+    width: 100%;
+}
+
+.search-bar .material-icons {
+    color: #aaa;
+    margin-right: 5px;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-avatar-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #E50914;
+}
+
+.notification {
+    color: #fff;
+    cursor: pointer;
+}
+
+.signup-link {
+    background-color: #E50914;
+    padding: 8px 15px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+
+/* --- 5. የቪዲዮ ካርዶች (Video Cards - Home Page) --- */
+.movie-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    border-left: 5px solid #E50914;
+    padding-left: 10px;
+}
+
+.video-grid {
+    /* ዩቲዩብ የ 4-5 አምድ መጠን ይጠቀማል */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 20px;
+    padding-bottom: 30px;
+}
+
+.video-card {
+    background-color: #181818; /* የዳራ ቀለም እንዳይሸፍን */
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.video-card img {
+    width: 100%;
+    height: 180px; /* ቋሚ ቁመት */
+    object-fit: cover;
+    display: block;
+}
+
+.card-info {
+    padding: 15px;
+    display: flex;
+}
+
+.video-thumbnail-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #E50914;
+    margin-right: 10px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.card-text {
+    flex-grow: 1;
+}
+
+.card-title {
+    font-size: 1em;
+    font-weight: 700;
+    margin-bottom: 5px;
+    line-height: 1.4;
+    max-height: 40px; /* ለሁለት መስመር */
+    overflow: hidden;
+    color: #fff;
+}
+
+.card-meta {
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+.download-btn-card {
+    /* በ home.html ላይ ያለውን የ download አዝራር እንሰውረዋለን */
+    display: none;
+}
+
+
+/* --- 6. የቪዲዮ ዝርዝሮች ገጽ (Details Page - details.html) --- */
+
+.video-player-container {
+    display: flex;
+    gap: 24px;
+    padding-right: 20px; /* ከቀኝ እንዲርቅ */
+}
+
+.main-video-area {
+    flex: 3; /* 2/3 ያህል ቦታ */
+    min-width: 0; 
+}
+
+.related-videos-area {
+    flex: 1; /* 1/3 ያህል ቦታ */
+    min-width: 300px;
+}
+
+.video-player-frame {
+    width: 100%;
+    background-color: #000;
+    border-radius: 12px; /* ጠርዝ ይዞር */
+    overflow: hidden;
+}
+
+.video-player-frame video {
+    width: 100%;
+    /* የዩቲዩብ አይነት ምጥጥን 16:9 ለማስያዝ height: auto እንጠቀማለን */
+    height: auto; 
+    max-height: 80vh; 
+    display: block;
+}
+
+.video-title {
+    font-size: 1.8em;
+    margin: 15px 0 10px;
+    font-weight: 700;
+}
+
+.video-meta-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.video-channel-info {
+    display: flex;
+    align-items: center;
+}
+
+.channel-avatar {
+    width: 48px;
+    height: 48px;
+    background-color: #555; /* ዳራ */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.channel-name {
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.channel-subscribers {
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+.interaction-buttons {
+    display: flex;
+    gap: 10px;
+    background: #333; /* አዝራሮችን በአንድ ዳራ መያዣ ውስጥ ማስገባት */
+    padding: 8px;
+    border-radius: 20px;
+}
+
+.interaction-btn {
+    background: none;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.interaction-btn:hover {
+    background: #555;
+}
+
+.video-description {
+    background: #272727; /* እንደ YouTube መግለጫ */
+    padding: 15px;
+    border-radius: 12px;
+}
+
+/* --- 7. Responsive Design (ለሞባይል) --- */
+
+@media (max-width: 1000px) {
+    .video-player-container {
+        flex-direction: column; 
+    }
+
+    .related-videos-area {
+        min-width: 100%;
+        margin-top: 20px;
+    }
+
+    .main-video-area {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 0;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 10px;
+    }
+    .top-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .search-bar {
+        width: 100%;
+        max-width: none;
+    }
+    .video-meta-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .interaction-buttons {
+        width: 100%;
+        justify-content: space-around;
+        gap: 5px;
+    }
+    .video-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+}
