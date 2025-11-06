@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Amharic - መነሻ ገጽ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ቪዲዮዎችን ለማሳየት የሚያስፈልጉ ዘይቤዎች */
+        body {
+            background-color: #141414; /* ጥቁር ዳራ */
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            padding: 0; 
+            margin: 0;
+        }
+
+        /* ለይዘቱ የጎን ክፍተት ይሰጣል */
+        .content-wrapper {
+            padding: 20px 4%; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
+        
+        /* የHeader ክፍል */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 4%; 
+            border-bottom: 1px solid #333;
+            background-color: #141414; 
+            width: 92%; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
+
+        .logo {
+            color: #E50914; 
+            font-size: 30px;
+            font-weight: 800;
+        }
+        .logout-btn {
+            background-color: #E50914;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        h1 {
+            margin-top: 40px; 
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        /* ለዘውግ ርዕሶች ማስተካከያ */
+        h2 {
+            margin-top: 50px;
+            margin-bottom: 15px;
+            font-size: 24px;
+            color: #ccc;
+        }
+        
+        .video-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start; 
+        }
+        .video-item {
+            width: 300px; 
+            background-color: #222;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+            cursor: pointer; /* ሲጫን ምላሽ እንደሚሰጥ ለማሳየት */
+        }
+        .video-item:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 🔴 የ CSS ክፍሎች ለፖስተር ምስል */
+        .video-poster {
+            width: 100%;
+            height: 180px;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            color: #fff; 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .video-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            position: absolute; 
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .video-poster span {
+             z-index: 2; 
+             position: relative;
+             background-color: rgba(0, 0, 0, 0.5); 
+             padding: 5px 10px;
+             border-radius: 3px;
+             font-weight: 600;
+        }
+        /* መጨረሻ የ CSS ክፍሎች */
+
+        .video-info {
+            padding: 15px;
+        }
+        .video-info h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+        .download-link {
+            display: block;
+            background-color: #444;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 10px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        /* የ Pop-up Player ክፍሎችን አስወግደናል */
+        #video-player-container { display: none !important; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">NETFLIX አማርኛ</div>
+                <a href="#" class="logout-btn" onclick="handleLogout()">ይውጡ (Log Out)</a>
+    </div>
+    
+    <div class="content-wrapper">
+        
+        <h1>📽️ ለእርስዎ የተመረጡ ይዘቶች</h1>
+
+        <h2>🇪🇹 አማርኛ ፊልም (Amharic Movies)</h2>
+        <div class="video-grid">
+            
+                        <div class="video-item" onclick="playMovie('movie_id_1')">
+                <div class="video-poster">
+                    <img src="3.jpg" alt="ፖስተር"> 
+                    <span>ለመመልከት እዚህ ይጫኑ</span>
+                </div>
+                <div class="video-info">
+                    <h3>የፍቅር ጉዞ</h3>
+                    <p>አዲስ አስደናቂ የአማርኛ ፊልም</p>
+                                        <a href="details.html" class="download-link">መረጃ ይመልከቱ</a> 
+                </div>
+            </div>
+
+                        <div class="video-item" onclick="playMovie('movie_id_2')">
+                <div class="video-poster">
+                    <img src="3.jpg" alt="ፖስተር">
+                    <span>ለመመልከት እዚህ ይጫኑ</span>
+                </div>
+                <div class="video-info">
+                    <h3>የመጨረሻው ምዕራፍ</h3>
+                    <p>ከፍተኛ ተወዳጅነት ያገኘ የሀገር ውስጥ ፊልም</p>
+                    <a href="details.html" class="download-link">መረጃ ይመልከቱ</a>
+                </div>
+            </div>
+        </div>
+        
+        <h2>📺 ተከታታይ ፊልም (Series)</h2>
+        <div class="video-grid">
+            
+                        <div class="video-item" onclick="playMovie('movie_id_3')">
+                <div class="video-poster">
+                    <img src="3.jpg" alt="ፖስተር">
+                    <span>ለመመልከት እዚህ ይጫኑ</span>
+                </div>
+                <div class="video-info">
+                    <h3>ጥቁር ፍቅር - ክፍል ፩</h3>
+                    <p>አስደማሚ ተከታታይ ድራማ</p>
+                    <a href="details.html" class="download-link">መረጃ ይመልከቱ</a>
+                </div>
+            </div>
+
+                        <div class="video-item" onclick="playMovie('movie_id_4')">
+                <div class="video-poster">
+                    <img src="3.jpg" alt="ፖስተር">
+                    <span>ለመመልከት እዚህ ይጫኑ</span>
+                </div>
+                <div class="video-info">
+                    <h3>የዘመን አሻራ - ምዕራፍ ፫</h3>
+                    <p>የተጠበቀው የመጨረሻው ምዕራፍ!</p>
+                    <a href="details.html" class="download-link">መረጃ ይመልከቱ</a>
+                </div>
+            </div>
+        </div>
+
+        <h2>🇮🇳 የህንድ ፊልም (Bollywood)</h2>
+        <div class="video-grid">
+            
+                        <div class="video-item" onclick="playMovie('movie_id_5')">
+                <div class="video-poster">
+                    <img src="3.jpg" alt="ፖስተር">
+                    <span>ለመመልከት እዚህ ይጫኑ</span>
+                </div>
+                <div class="video-info">
+                    <h3>Raees</h3>
+                    <p>በአማርኛ ንኡስ ጽሑፍ (Subtitle)</p>
+                    <a href="details.html" class="download-link">መረጃ ይመልከቱ</a>
+                </div>
+            </div>
+        </div>
+
+        <h2>🇺🇸 የእንግሊዘኛ ፊልም (Hollywood)</h2>
+        <div class="video-grid">
+            
+                        <div class="video-item" onclick="playMovie('movie_id_6')">
+                <div class="video-poster">
+                    <img src="3.jpg" alt="ፖስተር">
+                    <span>ለመመልከት እዚህ ይጫኑ</span>
+                </div>
+                <div class="video-info">
+                    <h3>Inception</h3>
+                    <p>ዓለም አቀፍ ተወዳጅ ፊልም</p>
+                    <a href="details.html" class="download-link">መረጃ ይመልከቱ</a>
+                </div>
+            </div>
+        </div>
+
+        <h2>🤣 ሲትኮም (Sitcom)</h2>
+        <div class="video-grid">
+            
+                        <div class="video-item" onclick="playMovie('movie_id_7')">
+                <div class="video-poster">
+                    <img src="3.jpg" alt="ፖስተር">
+                    <span>ለመመልከት እዚህ ይጫኑ</span>
+                </div>
+                <div class="video-info">
+                    <h3>እንቅልፍ የሌለው ሌሊት</h3>
+                    <p>አጭርና አስቂኝ የቤተሰብ ቀልዶች</p>
+                    <a href="details.html" class="download-link">መረጃ ይመልከቱ</a>
+                </div>
+            </div>
+        </div>
+        
+    </div> 
+
+        <script>
+        // 🟢 አዲስ ተግባር: ፊልም ሲጫን ID ወደ details.html የሚልኩት
+        function playMovie(movieId) {
+            // የተመረጠውን ID ለ details.html እንዲያገኘው በ Local Storage እናስቀምጣለን
+            localStorage.setItem('selectedMovieId', movieId);
+            window.location.href = 'details.html';
+        }
+
+        // መውጣት (Log Out) ተግባር
+        function handleLogout() {
+            if (confirm("በእርግጥ ከአካውንትዎ መውጣት ይፈልጋሉ?")) {
+                // እውነተኛው የመውጣት ስራ
+                localStorage.removeItem('currentUser');
+                window.location.href = 'signin.html';
+            }
+        }
+    </script>
+</body>
+</html>

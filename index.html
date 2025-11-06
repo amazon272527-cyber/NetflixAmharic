@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Amharic - Ethiopian Streaming</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-mini">NA</div>
+        <button class="sidebar-toggle"><span class="material-icons">menu</span></button>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item active"><span class="material-icons">home</span><span class="sidebar-text">መነሻ</span></a>
+            <a href="#" class="nav-item"><span class="material-icons">trending_up</span><span class="sidebar-text">በጣም የታዩ</span></a>
+            <a href="#" class="nav-item"><span class="material-icons">movie</span><span class="sidebar-text">ፊልሞች</span></a>
+            <a href="#" class="nav-item"><span class="material-icons">live_tv</span><span class="sidebar-text">ተከታታይ</span></a>
+            <a href="#" class="nav-item"><span class="material-icons">bookmarks</span><span class="sidebar-text">የኔ ዝርዝር</span></a>
+            <a href="profile.html" class="nav-item bottom"><span class="material-icons">settings</span><span class="sidebar-text">ቅንብሮች</span></a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="search-bar">
+                <span class="material-icons">search</span>
+                <input type="text" placeholder="ፈልግ..." />
+            </div>
+            
+            <div class="language-selector">
+                <select id="language-switch">
+                    <option value="am">አማርኛ</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            
+            <div class="user-actions" id="user-actions-container">
+                </div>
+        </header>
+
+        <section class="hero-section"> 
+            <div class="hero-content"> 
+                <span class="hero-category">EXCLUSIVE SERIES</span> 
+                <h1 class="hero-title">ዘ ሌጀንድ ኦፍ <span>አምሃራ</span></h1> 
+                <p class="hero-description">በእርስ በእርስ ጦርነት በተናወጠችው የአምሃራ ግዛት ውስጥ ስለሚደረግ ታላቅ የጀብዱ ጉዞ የሚተርክ የፋንታሲ ተከታታይ ፊልም።</p> 
+                <div class="hero-meta"> 
+                    <a href="details.html" class="hero-btn primary"> 
+                        <span class="material-icons">play_arrow</span> አሁን ይመልከቱ 
+                    </a> 
+                    <button class="hero-btn secondary">ተጨማሪ መረጃ</button> 
+                </div> 
+            </div> 
+        </section>
+
+        <div class="categories">
+            
+            <section class="movie-row">
+                <h3>Trending Now</h3>
+                <div class="movie-grid-scroll">
+                    <div class="movie-card"><img src="bloodhounds_poster.jpg" alt="Bloodhounds Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">BLOODHOUNDS</span><span class="duration">2h 12m</span></div></div>
+                    <div class="movie-card"><img src="movie2.jpg" alt="Movie Two Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">DESTINY</span><span class="duration">1h 35m</span></div></div>
+                    <div class="movie-card"><img src="movie3.jpg" alt="Movie Three Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">THE ADDIS</span><span class="duration">2h 05m</span></div></div>
+                    <div class="movie-card"><img src="movie4.jpg" alt="Movie Four Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">GHOST HUNT</span><span class="duration">1h 40m</span></div></div>
+                    <div class="movie-card"><img src="poster-placeholder.jpg" alt="Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">የመጨረሻው ታሪክ</span><span class="duration">1h 50m</span></div></div>
+                    <div class="movie-card"><img src="poster-placeholder.jpg" alt="Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">ትምህርት ቤት</span><span class="duration">1h 50m</span></div></div>
+                    <div class="movie-card"><img src="poster-placeholder.jpg" alt="Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">ተስፋ</span><span class="duration">1h 50m</span></div></div>
+                </div>
+            </section>
+
+            <section class="movie-row">
+                <h3>New Arrivals</h3>
+                <div class="movie-grid-scroll">
+                    <div class="movie-card"><img src="poster-placeholder.jpg" alt="Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">የሰፈር ልጅ</span><span class="duration">1h 50m</span></div></div>
+                    <div class="movie-card"><img src="poster-placeholder.jpg" alt="Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">የእውነት ቃል</span><span class="duration">1h 50m</span></div></div>
+                    <div class="movie-card"><img src="poster-placeholder.jpg" alt="Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">አዲስ ዘመን</span><span class="duration">1h 50m</span></div></div>
+                    <div class="movie-card"><img src="poster-placeholder.jpg" alt="Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">ሌሊት</span><span class="duration">1h 50m</span></div></div>
+                    <div class="movie-card"><img src="poster-placeholder.jpg" alt="Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">የጠፋው ስዕል</span><span class="duration">1h 50m</span></div></div>
+                    <div class="movie-card"><img src="poster-placeholder.jpg" alt="Poster" class="card-image"><div class="card-overlay"><span class="overlay-text">የጎረቤት ድምጽ</span><span class="duration">1h 50m</span></div></div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <div class="cookie-bar" id="cookie-consent-bar">
+        <p>ይህ ድረ-ገጽ የአገልግሎት ጥራት ለማሻሻል ኩኪዎችን ይጠቀማል።
+            <a href="#" class="cookie-link">ተጨማሪ ያንብቡ</a>
+        </p>
+        <button class="cookie-dismiss-btn" id="accept-cookies">እቀበላለሁ</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedUsername = localStorage.getItem('currentUser');
+            const storedImageBase64 = localStorage.getItem('userProfileImage'); 
+            const userActionsContainer = document.getElementById('user-actions-container');
+            
+            // 1. የቋንቋ መቆጣጠሪያ ተግባር
+            const langSwitch = document.getElementById('language-switch');
+            const storedLang = localStorage.getItem('appLanguage') || 'am'; // ነባሪ አማርኛ
+            
+            if (langSwitch) {
+                langSwitch.value = storedLang; // የመጨረሻ የተመረጠውን ቋንቋ ማሳየት
+                
+                langSwitch.addEventListener('change', (event) => {
+                    localStorage.setItem('appLanguage', event.target.value);
+                    alert(`ቋንቋ ወደ "${event.target.options[event.target.selectedIndex].text}" ተቀይሯል።`);
+                    // window.location.reload(); 
+                });
+            }
+
+            // 2. የተጠቃሚ ሁኔታን መወሰን (Log In/Log Out)
+            if (storedUsername) {
+                // ተጠቃሚው ከገባ (Log In ከሆነ)
+                userActionsContainer.innerHTML = `
+                    <span class="material-icons notification">notifications</span> 
+                    <span class="user-name-display">${storedUsername}</span> 
+                    <a href="profile.html"><img src="${storedImageBase64 || 'profile_avatar.jpg'}" alt="Profile Image" class="profile-avatar-img"></a>
+                `;
+            } else {
+                // ተጠቃሚው ካልገባ (Logged Out ከሆነ)
+                userActionsContainer.innerHTML = `
+                    <a href="signin.html" class="signup-link">ይግቡ (Sign In)</a>
+                `;
+            }
+            
+            // 3. SIDEBAR TOGGLE ተግባር
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('is-open');
+                    mainContent.classList.toggle('is-open');
+                    
+                    // አዶውን መለወጥ
+                    const icon = sidebarToggle.querySelector('.material-icons');
+                    if (sidebar.classList.contains('is-open')) {
+                        icon.textContent = 'close';
+                    } else {
+                        icon.textContent = 'menu';
+                    }
+                });
+            }
+
+            // 4. 🟢 አዲስ የተጨመረ: የኩኪ ማስጠንቀቂያ ተግባር
+            const cookieBar = document.getElementById('cookie-consent-bar');
+            const acceptButton = document.getElementById('accept-cookies');
+            const cookieAccepted = localStorage.getItem('cookieConsent');
+
+            // ኩኪው ካልተቀበለ ማሳያውን አሳይ
+            if (!cookieAccepted && cookieBar) {
+                cookieBar.style.display = 'flex';
+            } else if (cookieBar) {
+                 // ከተቀበለ ደብቅ
+                cookieBar.style.display = 'none';
+            }
+
+            if (acceptButton) {
+                acceptButton.addEventListener('click', () => {
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    if (cookieBar) {
+                        cookieBar.style.display = 'none';
+                    }
+                    console.log("Cookie consent accepted.");
+                });
+            }
+        });
+    </script>
+</body>
+</html>

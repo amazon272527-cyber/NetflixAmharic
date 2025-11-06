@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">ቪዲዮ ይጫወታል - [የፊልም ርዕስ]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-mini">NA</div>
+        <button class="sidebar-toggle"><span class="material-icons">menu</span></button>
+        <nav class="sidebar-nav">
+            <a href="home.html" class="nav-item"><span class="material-icons">home</span><span class="sidebar-text">መነሻ</span></a>
+            <a href="#" class="nav-item active"><span class="material-icons">movie</span><span class="sidebar-text">አሁን ይመልከቱ</span></a>
+            <a href="#" class="nav-item"><span class="material-icons">live_tv</span><span class="sidebar-text">ተከታታይ</span></a>
+            <a href="#" class="nav-item bottom" onclick="handleLogout(event)">
+                <span class="material-icons">logout</span><span class="sidebar-text">ይውጡ</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="search-bar">
+                <span class="material-icons">search</span>
+                <input type="text" placeholder="ፈልግ..." />
+            </div>
+            <div class="user-actions" id="user-actions-container">
+                            </div>
+        </header>
+
+        <div class="video-player-container">
+            
+            <div class="main-video-area">
+                
+                <div class="video-player-frame">
+                    <video id="mainVideoPlayer" controls autoplay src="" poster=""></video>
+                </div>
+                
+                <h1 class="video-title">የቪዲዮ ርዕስ</h1>
+                
+                <div class="video-meta-bar">
+                    
+                    <div class="video-channel-info">
+                        <div class="channel-avatar">NA</div>
+                        <div>
+                            <p class="channel-name">NETFLIX አማርኛ ኦሪጅናል</p>
+                            <p class="channel-subscribers">8.5M ተመዝጋቢዎች</p>
+                        </div>
+                    </div>
+
+                    <div class="interaction-buttons">
+                        <button class="interaction-btn" onclick="alert('ውዴታዎ ተመዝግቧል! እናመሰግናለን።')">
+                            <span class="material-icons">thumb_up</span> <span id="likeCount">120K</span>
+                        </button>
+                        <button class="interaction-btn" onclick="alert('አስተያየት መስጫው ገጽ ወደፊት ይሠራል!')">
+                            <span class="material-icons">comment</span> አስተያየት
+                        </button>
+                        <button class="interaction-btn" onclick="alert('የቪዲዮው ማጋሪያ ሊንክ ወደ ክሊፕቦርድ ተኮርጅቷል!')">
+                            <span class="material-icons">share</span> ያጋሩ
+                        </button>
+                        <button class="interaction-btn" id="downloadBtn">
+                            <span class="material-icons">file_download</span> አውርድ
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="video-description">
+                    <p class="description-stats">3.2M እይታዎች • 3 ሳምንታት በፊት</p>
+                    <pre id="movieDescription">የፊልሙ መግለጫ እዚህ ይገባል...</pre>
+                </div>
+
+            </div>
+
+            <div class="related-videos-area" id="relatedVideos">
+                <h2>ተዛማጅ ቪዲዮዎች</h2>
+                            </div>
+            
+        </div>
+    </main>
+    
+    <script>
+        // 🟢 የፊልም መረጃዎችን በID የሚይዝ የውሂብ ስብስብ (Data Source)
+        const MOVIE_DATA = {
+            // ከ home.html ላይ ካሉት IDዎች ጋር የሚጣጣም መረጃ
+            'movie_id_1': {
+                title: 'የፍቅር ጉዞ - አዲስ አስደናቂ የአማርኛ ፊልም',
+                videoSrc: 'videos/amharic_movie_1.mp4', 
+                poster: 'posters/movie_am1.jpg', 
+                description: 'የፍቅር ጉዞ አዲስ አስደናቂ የአማርኛ ፊልም ነው።',
+                views: '3.2M',
+                uploaded: '3 ሳምንታት በፊት'
+            },
+            'movie_id_2': {
+                title: 'የመጨረሻው ምዕራፍ - ከፍተኛ ተወዳጅነት ያገኘ',
+                videoSrc: 'videos/amharic_movie_2.mp4', 
+                poster: 'posters/movie_am2.jpg',
+                description: 'ከፍተኛ ተወዳጅነት ያገኘ የሀገር ውስጥ ፊልም።',
+                views: '560K',
+                uploaded: '2 ወራት በፊት'
+            },
+            'movie_id_3': {
+                title: 'ጥቁር ፍቅር - ክፍል ፩ - አስደማሚ ተከታታይ ድራማ',
+                videoSrc: 'videos/series_1.mp4', 
+                poster: 'posters/series_1.jpg',
+                description: 'አስደማሚ ተከታታይ ድራማ፣ ክፍል ፩።',
+                views: '1.1M',
+                uploaded: '1 ወር በፊት'
+            },
+            'movie_id_4': {
+                title: 'የዘመን አሻራ - ምዕራፍ ፫ - የመጨረሻው ምዕራፍ',
+                videoSrc: 'videos/series_2.mp4', 
+                poster: 'posters/series_2.jpg',
+                description: 'የተጠበቀው የዘመን አሻራ የመጨረሻው ምዕራፍ!',
+                views: '400K',
+                uploaded: '2 ሳምንታት በፊት'
+            },
+            'movie_id_5': {
+                title: 'Raees (የህንድ ፊልም) - በአማርኛ ንኡስ ጽሑፍ',
+                videoSrc: 'videos/bollywood_1.mp4', 
+                poster: 'posters/bollywood_1.jpg',
+                description: 'በአማርኛ ንኡስ ጽሑፍ የተዘጋጀ የህንድ ተወዳጅ ፊልም።',
+                views: '900K',
+                uploaded: '4 ወራት በፊት'
+            },
+            'movie_id_6': {
+                title: 'Inception (የእንግሊዘኛ ፊልም) - ዓለም አቀፍ ተወዳጅ',
+                videoSrc: 'videos/hollywood_1.mp4', 
+                poster: 'posters/hollywood_1.jpg',
+                description: 'ዓለም አቀፍ ተወዳጅ ፊልም Inception።',
+                views: '6M',
+                uploaded: '1 ዓመት በፊት'
+            },
+            'movie_id_7': {
+                title: 'እንቅልፍ የሌለው ሌሊት - ሲትኮም',
+                videoSrc: 'videos/sitcom_1.mp4', 
+                poster: 'posters/sitcom_1.jpg',
+                description: 'አጭርና አስቂኝ የቤተሰብ ቀልዶች (ሲትኮም)።',
+                views: '150K',
+                uploaded: '1 ሳምንት በፊት'
+            },
+            'default': { 
+                title: 'እንኳን ወደ NETFLIX አማርኛ በደህና መጡ',
+                videoSrc: 'videos/intro.mp4', 
+                poster: 'posters/default_poster.jpg',
+                description: 'ምንም ቪዲዮ ስላልተመረጠ ነባሪ (Default) መረጃ እየታየ ነው።',
+                views: '0',
+                uploaded: 'ዛሬ'
+            }
+        };
+
+
+        // Log Out ተግባር
+        function handleLogout(event) {
+            event.preventDefault(); 
+            if (confirm("በእርግጥ ከአካውንትዎ መውጣት ይፈልጋሉ?")) {
+                localStorage.removeItem('currentUser'); 
+                window.location.href = 'index.html';  
+            }
+        }
+
+        function loadMovieData() {
+            const selectedMovieId = localStorage.getItem('selectedMovieId');
+            const movie = MOVIE_DATA[selectedMovieId] || MOVIE_DATA['default']; 
+
+            if (movie) {
+                document.getElementById('pageTitle').textContent = movie.title;
+                document.querySelector('.video-title').textContent = movie.title;
+                document.getElementById('mainVideoPlayer').src = movie.videoSrc;
+                document.getElementById('mainVideoPlayer').poster = movie.poster; 
+                document.querySelector('.description-stats').textContent = `${movie.views} እይታዎች • ${movie.uploaded}`;
+                document.getElementById('movieDescription').textContent = movie.description;
+            } 
+
+            // 🔴 የቪዲዮ ማውረድ ተግባር (Download Function - ወደ Files/Gallery እንዲገባ)
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', () => {
+                    const videoSrc = movie.videoSrc; 
+                    
+                    if (videoSrc) {
+                        const a = document.createElement('a');
+                        a.href = videoSrc; 
+                        
+                        // የፋይሉን ስም ማመንጨት (የፈለጉትን ስም እንዲወስድ)
+                        const cleanTitle = movie.title.replace(/[^a-z0-9\s]/gi, '').trim().substring(0, 50); 
+                        a.download = `NETFLIX_AMHARIC_${cleanTitle}.mp4`;  // 🔴 የቪዲዮ ፋይል ስም
+                        
+                        document.body.appendChild(a);
+                        a.click(); 
+                        document.body.removeChild(a);
+                        // የፋይል ማውረድ የሚከናወነው በBrowser ስለሆነ መልእክት እንሰጣለን
+                        alert(`"${movie.title}" ማውረድ በ Browser ተጀምሯል። እባክዎ የ Download Folderዎን ያረጋግጡ።`); 
+                    } else {
+                        alert("የማውረጃ ሊንክ አልተገኘም። ቪዲዮው በትክክል መጫኑን ያረጋግጡ።");
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMovieData(); 
+
+            // የተጠቃሚ ሁኔታ (Login/Signup)
+            const storedUsername = localStorage.getItem('currentUser');
+            const userActionsContainer = document.getElementById('user-actions-container');
+
+            if (storedUsername) {
+                userActionsContainer.innerHTML = `
+                    <span class="material-icons notification">notifications_none</span> 
+                    <a href="profile.html"><img src="profile_avatar.jpg" alt="Profile Image" class="profile-avatar-img"></a>
+                `;
+                // የ username display ን ከ header አውጥተናል (እንደ ዩቲዩብ ለመምሰል)
+            } else {
+                userActionsContainer.innerHTML = `
+                    <a href="index.html" class="signup-link">ይመዝገቡ (Sign Up)</a>
+                `;
+            }
+            
+            // SIDEBAR TOGGLE ተግባር
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('is-open');
+                    mainContent.classList.toggle('is-open');
+                    
+                    const icon = sidebarToggle.querySelector('.material-icons');
+                    icon.textContent = sidebar.classList.contains('is-open') ? 'close' : 'menu';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">ቪዲዮ ይጫወታል - [የፊልም ርዕስ]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-mini">NA</div>
+        <button class="sidebar-toggle"><span class="material-icons">menu</span></button>
+        <nav class="sidebar-nav">
+            <a href="home.html" class="nav-item"><span class="material-icons">home</span><span class="sidebar-text">መነሻ</span></a>
+            <a href="#" class="nav-item active"><span class="material-icons">movie</span><span class="sidebar-text">አሁን ይመልከቱ</span></a>
+            <a href="#" class="nav-item"><span class="material-icons">live_tv</span><span class="sidebar-text">ተከታታይ</span></a>
+            <a href="#" class="nav-item bottom" onclick="handleLogout(event)">
+                <span class="material-icons">logout</span><span class="sidebar-text">ይውጡ</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="search-bar">
+                <span class="material-icons">search</span>
+                <input type="text" placeholder="ፈልግ..." />
+            </div>
+            <div class="user-actions" id="user-actions-container">
+                            </div>
+        </header>
+
+        <div class="video-player-container">
+            
+            <div class="main-video-area">
+                
+                <div class="video-player-frame">
+                    <video id="mainVideoPlayer" controls autoplay src="" poster=""></video>
+                </div>
+                
+                <h1 class="video-title">የቪዲዮ ርዕስ</h1>
+                
+                <div class="video-meta-bar">
+                    
+                    <div class="video-channel-info">
+                        <div class="channel-avatar">NA</div>
+                        <div>
+                            <p class="channel-name">NETFLIX አማርኛ ኦሪጅናል</p>
+                            <p class="channel-subscribers">8.5M ተመዝጋቢዎች</p>
+                        </div>
+                    </div>
+
+                    <div class="interaction-buttons">
+                        <button class="interaction-btn" onclick="alert('ውዴታዎ ተመዝግቧል! እናመሰግናለን።')">
+                            <span class="material-icons">thumb_up</span> <span id="likeCount">120K</span>
+                        </button>
+                        <button class="interaction-btn" onclick="alert('አስተያየት መስጫው ገጽ ወደፊት ይሠራል!')">
+                            <span class="material-icons">comment</span> አስተያየት
+                        </button>
+                        <button class="interaction-btn" onclick="alert('የቪዲዮው ማጋሪያ ሊንክ ወደ ክሊፕቦርድ ተኮርጅቷል!')">
+                            <span class="material-icons">share</span> ያጋሩ
+                        </button>
+                        <button class="interaction-btn" id="downloadBtn">
+                            <span class="material-icons">file_download</span> አውርድ
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="video-description">
+                    <p class="description-stats">3.2M እይታዎች • 3 ሳምንታት በፊት</p>
+                    <pre id="movieDescription">የፊልሙ መግለጫ እዚህ ይገባል...</pre>
+                </div>
+
+            </div>
+
+            <div class="related-videos-area" id="relatedVideos">
+                <h2>ተዛማጅ ቪዲዮዎች</h2>
+                            </div>
+            
+        </div>
+    </main>
+    
+    <script>
+        // 🟢 የፊልም መረጃዎችን በID የሚይዝ የውሂብ ስብስብ (Data Source)
+        const MOVIE_DATA = {
+            // ከ home.html ላይ ካሉት IDዎች ጋር የሚጣጣም መረጃ
+            'movie_id_1': {
+                title: 'የፍቅር ጉዞ - አዲስ አስደናቂ የአማርኛ ፊልም',
+                videoSrc: 'videos/amharic_movie_1.mp4', 
+                poster: 'posters/movie_am1.jpg', 
+                description: 'የፍቅር ጉዞ አዲስ አስደናቂ የአማርኛ ፊልም ነው።',
+                views: '3.2M',
+                uploaded: '3 ሳምንታት በፊት'
+            },
+            'movie_id_2': {
+                title: 'የመጨረሻው ምዕራፍ - ከፍተኛ ተወዳጅነት ያገኘ',
+                videoSrc: 'videos/amharic_movie_2.mp4', 
+                poster: 'posters/movie_am2.jpg',
+                description: 'ከፍተኛ ተወዳጅነት ያገኘ የሀገር ውስጥ ፊልም።',
+                views: '560K',
+                uploaded: '2 ወራት በፊት'
+            },
+            'movie_id_3': {
+                title: 'ጥቁር ፍቅር - ክፍል ፩ - አስደማሚ ተከታታይ ድራማ',
+                videoSrc: 'videos/series_1.mp4', 
+                poster: 'posters/series_1.jpg',
+                description: 'አስደማሚ ተከታታይ ድራማ፣ ክፍል ፩።',
+                views: '1.1M',
+                uploaded: '1 ወር በፊት'
+            },
+            'movie_id_4': {
+                title: 'የዘመን አሻራ - ምዕራፍ ፫ - የመጨረሻው ምዕራፍ',
+                videoSrc: 'videos/series_2.mp4', 
+                poster: 'posters/series_2.jpg',
+                description: 'የተጠበቀው የዘመን አሻራ የመጨረሻው ምዕራፍ!',
+                views: '400K',
+                uploaded: '2 ሳምንታት በፊት'
+            },
+            'movie_id_5': {
+                title: 'Raees (የህንድ ፊልም) - በአማርኛ ንኡስ ጽሑፍ',
+                videoSrc: 'videos/bollywood_1.mp4', 
+                poster: 'posters/bollywood_1.jpg',
+                description: 'በአማርኛ ንኡስ ጽሑፍ የተዘጋጀ የህንድ ተወዳጅ ፊልም።',
+                views: '900K',
+                uploaded: '4 ወራት በፊት'
+            },
+            'movie_id_6': {
+                title: 'Inception (የእንግሊዘኛ ፊልም) - ዓለም አቀፍ ተወዳጅ',
+                videoSrc: 'videos/hollywood_1.mp4', 
+                poster: 'posters/hollywood_1.jpg',
+                description: 'ዓለም አቀፍ ተወዳጅ ፊልም Inception።',
+                views: '6M',
+                uploaded: '1 ዓመት በፊት'
+            },
+            'movie_id_7': {
+                title: 'እንቅልፍ የሌለው ሌሊት - ሲትኮም',
+                videoSrc: 'videos/sitcom_1.mp4', 
+                poster: 'posters/sitcom_1.jpg',
+                description: 'አጭርና አስቂኝ የቤተሰብ ቀልዶች (ሲትኮም)።',
+                views: '150K',
+                uploaded: '1 ሳምንት በፊት'
+            },
+            'default': { 
+                title: 'እንኳን ወደ NETFLIX አማርኛ በደህና መጡ',
+                videoSrc: 'videos/intro.mp4', 
+                poster: 'posters/default_poster.jpg',
+                description: 'ምንም ቪዲዮ ስላልተመረጠ ነባሪ (Default) መረጃ እየታየ ነው።',
+                views: '0',
+                uploaded: 'ዛሬ'
+            }
+        };
+
+
+        // Log Out ተግባር
+        function handleLogout(event) {
+            event.preventDefault(); 
+            if (confirm("በእርግጥ ከአካውንትዎ መውጣት ይፈልጋሉ?")) {
+                localStorage.removeItem('currentUser'); 
+                window.location.href = 'index.html';  
+            }
+        }
+
+        function loadMovieData() {
+            const selectedMovieId = localStorage.getItem('selectedMovieId');
+            const movie = MOVIE_DATA[selectedMovieId] || MOVIE_DATA['default']; 
+
+            if (movie) {
+                document.getElementById('pageTitle').textContent = movie.title;
+                document.querySelector('.video-title').textContent = movie.title;
+                document.getElementById('mainVideoPlayer').src = movie.videoSrc;
+                document.getElementById('mainVideoPlayer').poster = movie.poster; 
+                document.querySelector('.description-stats').textContent = `${movie.views} እይታዎች • ${movie.uploaded}`;
+                document.getElementById('movieDescription').textContent = movie.description;
+            } 
+
+            // 🔴 የቪዲዮ ማውረድ ተግባር (Download Function - ወደ Files/Gallery እንዲገባ)
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', () => {
+                    const videoSrc = movie.videoSrc; 
+                    
+                    if (videoSrc) {
+                        const a = document.createElement('a');
+                        a.href = videoSrc; 
+                        
+                        // የፋይሉን ስም ማመንጨት (የፈለጉትን ስም እንዲወስድ)
+                        const cleanTitle = movie.title.replace(/[^a-z0-9\s]/gi, '').trim().substring(0, 50); 
+                        a.download = `NETFLIX_AMHARIC_${cleanTitle}.mp4`;  // 🔴 የቪዲዮ ፋይል ስም
+                        
+                        document.body.appendChild(a);
+                        a.click(); 
+                        document.body.removeChild(a);
+                        // የፋይል ማውረድ የሚከናወነው በBrowser ስለሆነ መልእክት እንሰጣለን
+                        alert(`"${movie.title}" ማውረድ በ Browser ተጀምሯል። እባክዎ የ Download Folderዎን ያረጋግጡ።`); 
+                    } else {
+                        alert("የማውረጃ ሊንክ አልተገኘም። ቪዲዮው በትክክል መጫኑን ያረጋግጡ።");
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMovieData(); 
+
+            // የተጠቃሚ ሁኔታ (Login/Signup)
+            const storedUsername = localStorage.getItem('currentUser');
+            const userActionsContainer = document.getElementById('user-actions-container');
+
+            if (storedUsername) {
+                userActionsContainer.innerHTML = `
+                    <span class="material-icons notification">notifications_none</span> 
+                    <a href="profile.html"><img src="profile_avatar.jpg" alt="Profile Image" class="profile-avatar-img"></a>
+                `;
+                // የ username display ን ከ header አውጥተናል (እንደ ዩቲዩብ ለመምሰል)
+            } else {
+                userActionsContainer.innerHTML = `
+                    <a href="index.html" class="signup-link">ይመዝገቡ (Sign Up)</a>
+                `;
+            }
+            
+            // SIDEBAR TOGGLE ተግባር
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('is-open');
+                    mainContent.classList.toggle('is-open');
+                    
+                    const icon = sidebarToggle.querySelector('.material-icons');
+                    icon.textContent = sidebar.classList.contains('is-open') ? 'close' : 'menu';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

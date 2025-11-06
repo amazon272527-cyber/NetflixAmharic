@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Amharic - Profile Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* ይህ ኮድ እርስዎ የሰጡት ሲሆን፣ በዋናው style.css ላይ ለዚህ ገጽ ብቻ ተደራቢ እንዲሆን ያገለግላል */
+        body {
+            display: flex;
+            background-image: none;
+            background-color: #1a1a1a;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .main-content {
+            padding: 30px;
+            flex-grow: 1;
+            max-width: 1000px;
+            width: 100%;
+        }
+        
+        .settings-header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+        
+        .settings-header h1 {
+            font-size: 28px;
+            color: #ff4081;
+        }
+    </style>
+</head>
+<body>
+    
+    <aside class="sidebar">
+        <div class="logo-mini">NA</div>
+        <button class="sidebar-toggle"><span class="material-icons">menu</span></button>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item"><span class="material-icons">home</span><span class="sidebar-text">መነሻ</span></a>
+            <a href="#" class="nav-item"><span class="material-icons">trending_up</span><span class="sidebar-text">በጣም የታዩ</span></a>
+            <a href="#" class="nav-item"><span class="material-icons">movie</span><span class="sidebar-text">ፊልሞች</span></a>
+            <a href="#" class="nav-item"><span class="material-icons">live_tv</span><span class="sidebar-text">ተከታታይ</span></a>
+            <a href="#" class="nav-item"><span class="material-icons">bookmarks</span><span class="sidebar-text">የኔ ዝርዝር</span></a>
+            <a href="profile.html" class="nav-item active bottom"><span class="material-icons">settings</span><span class="sidebar-text">ቅንብሮች</span></a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="search-bar">
+                <span class="material-icons">search</span>
+                <input type="text" placeholder="ፈልግ..." />
+            </div>
+
+            <div class="language-selector">
+                <select id="language-switch">
+                    <option value="am">አማርኛ</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            
+            <div class="user-actions" id="user-actions-container">
+                </div>
+        </header>
+
+        <div class="settings-header">
+            <h1>User Profile Settings</h1>
+        </div>
+
+        <form class="profile-settings-form">
+            
+            <div class="setting-group profile-picture-group">
+                <h3>Profile Picture</h3>
+                <img src="profile_avatar.jpg" alt="Current Profile Image" class="current-profile-img">
+                <input type="file" id="profile-upload" accept="image/*">
+                <label for="profile-upload" class="upload-btn">ምስል ይቀይሩ</label>
+            </div>
+
+            <div class="setting-group info-group">
+                <h3>Personal Information</h3>
+                <div class="input-group">
+                    <label for="username">User Name</label>
+                    <input type="text" id="username" value="አስዋ (Aswa)" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" value="aswa@example.com" readonly> 
+                </div>
+            </div>
+
+            <div class="setting-group password-group">
+                <h3>Password</h3>
+                <div class="input-group">
+                    <label for="current-password">Current Password</label>
+                    <input type="password" id="current-password" placeholder="አሁን ያለውን የይለፍ ቃል ያስገቡ">
+                </div>
+                <div class="input-group">
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" placeholder="አዲስ የይለፍ ቃል">
+                </div>
+                <div class="input-group">
+                    <label for="confirm-new-password">Confirm New Password</label>
+                    <input type="password" id="confirm-new-password" placeholder="አዲሱን የይለፍ ቃል ያረጋግጡ">
+                </div>
+            </div>
+
+            <button type="submit" class="save-changes-btn">Changes Save (ለውጦችን አስቀምጥ)</button>
+            <button type="button" class="logout-btn">Log Out (ውጣ)</button>
+        </form>
+    </main>
+    
+    <div class="cookie-bar" id="cookie-consent-bar">
+        <p>ይህ ድረ-ገጽ የአገልግሎት ጥራት ለማሻሻል ኩኪዎችን ይጠቀማል።
+            <a href="#" class="cookie-link">ተጨማሪ ያንብቡ</a>
+        </p>
+        <button class="cookie-dismiss-btn" id="accept-cookies">እቀበላለሁ</button>
+    </div>
+
+    <script>
+        const profileUploadInput = document.getElementById('profile-upload');
+        const currentProfileImg = document.querySelector('.current-profile-img');
+        const settingsForm = document.querySelector('.profile-settings-form');
+        const usernameInput = document.getElementById('username');
+        const logoutButton = document.querySelector('.logout-btn');
+        const userActionsContainer = document.getElementById('user-actions-container');
+
+        let newProfileImageBase64 = null;
+
+
+        // ገጹ ሲጫን የተቀመጡ መረጃዎችን (ስም፣ ምስል እና ቋንቋ) ከLocal Storage ማሳየት
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedUsername = localStorage.getItem('currentUser');
+            const storedImageBase64 = localStorage.getItem('userProfileImage');
+            
+            // 1. ቋንቋ መቆጣጠር
+            const langSwitch = document.getElementById('language-switch');
+            const storedLang = localStorage.getItem('appLanguage') || 'am'; // ነባሪ አማርኛ
+            
+            if (langSwitch) {
+                langSwitch.value = storedLang;
+                
+                langSwitch.addEventListener('change', (event) => {
+                    localStorage.setItem('appLanguage', event.target.value);
+                    alert(`ቋንቋ ወደ "${event.target.options[event.target.selectedIndex].text}" ተቀይሯል።`);
+                });
+            }
+
+            // 2. የላይኛው አሞሌን ማስተካከል (User Actions)
+            if (storedUsername) {
+                // ተጠቃሚው ከገባ
+                userActionsContainer.innerHTML = `
+                    <span class="material-icons notification">notifications</span> 
+                    <span class="user-name-display">${storedUsername}</span> 
+                    <a href="profile.html"><img src="${storedImageBase64 || 'profile_avatar.jpg'}" alt="Profile Image" class="profile-avatar-img"></a>
+                `;
+                usernameInput.value = storedUsername;
+            } else {
+                 // ተጠቃሚው ካልገባ
+                userActionsContainer.innerHTML = `
+                    <a href="signin.html" class="signup-link">ይግቡ (Sign In)</a>
+                `;
+                // ተጠቃሚው ካልገባ ወደ ዋናው ገጽ መላክ (አማራጭ)
+                // window.location.href = 'index.html';
+            }
+
+            // 3. ምስል ካለ ማሳየት
+            if (storedImageBase64) {
+                currentProfileImg.src = storedImageBase64;
+            }
+
+            // 4. SIDEBAR TOGGLE ተግባር
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('is-open');
+                    mainContent.classList.toggle('is-open');
+                    
+                    const icon = sidebarToggle.querySelector('.material-icons');
+                    if (sidebar.classList.contains('is-open')) {
+                        icon.textContent = 'close';
+                    } else {
+                        icon.textContent = 'menu';
+                    }
+                });
+            }
+            
+            // 5. 🟢 አዲስ የተጨመረ: የኩኪ ማስጠንቀቂያ ተግባር
+            const cookieBar = document.getElementById('cookie-consent-bar');
+            const acceptButton = document.getElementById('accept-cookies');
+            const cookieAccepted = localStorage.getItem('cookieConsent');
+
+            // ኩኪው ካልተቀበለ ማሳያውን አሳይ
+            if (!cookieAccepted && cookieBar) {
+                cookieBar.style.display = 'flex';
+            } else if (cookieBar) {
+                 // ከተቀበለ ደብቅ
+                cookieBar.style.display = 'none';
+            }
+
+            if (acceptButton) {
+                acceptButton.addEventListener('click', () => {
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    if (cookieBar) {
+                        cookieBar.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+
+        // የምስል ቅድመ እይታ (Image Preview) እና Base64 መያዝ
+        profileUploadInput.addEventListener('change', function(event) {
+            if (event.target.files && event.target.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    currentProfileImg.src = e.target.result;
+                    newProfileImageBase64 = e.target.result; 
+                }
+                
+                reader.readAsDataURL(event.target.files[0]);
+                alert('✅ ምስልዎ ለጊዜያዊ ማሳያ ተቀይሯል። Changes Save ሲጫኑ በአሳሽዎ ይቀመጣል።');
+            }
+        });
+        
+        
+        // የቅንብሮች ቅጽ ሲላክ (Save Changes ሲጫኑ) - አዲስ ስም እና ምስል ማስቀመጥ
+        settingsForm.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+            const newUsername = usernameInput.value;
+            
+            // 1. የዩዘር ስም ማስቀመጥ
+            localStorage.setItem('currentUser', newUsername);
+
+            // 2. አዲስ ምስል ከተመረጠ፣ በLocal Storage ላይ ማስቀመጥ
+            if (newProfileImageBase64) {
+                 localStorage.setItem('userProfileImage', newProfileImageBase64);
+            }
+            
+            alert(`🎉 ${newUsername}። ለውጦችዎ ተቀምጠዋል! ወደ ዋናው ገጽ እየተመለሱ ነው።`);
+            
+            window.location.href = 'index.html';
+        });
+
+        // Log Out ተግባር
+        if (logoutButton) {
+            logoutButton.addEventListener('click', function() {
+                // የተቀመጠውን ስም እና ምስል ከLocal Storage ማጥፋት
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('userProfileImage');
+                
+                alert('Goodbye! በተሳካ ሁኔታ ወጥተዋል። ወደ ዋናው ገጽ እየተመለሱ ነው (ከነባሪ መረጃ ጋር)');
+                
+                // ወደ index.html በመመለስ ነባሪውን (default) መረጃ እንዲጭን ማድረግ
+                window.location.href = 'index.html'; 
+            });
+        }
+    </script>
+</body>
+</html>
